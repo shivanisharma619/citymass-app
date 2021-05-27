@@ -23,7 +23,7 @@ export function AccessibilityPage({
 
   return (
   <div className="card bg-light text-black">
-    <iframe id="exploreIFrame" className="card-img" src={url}
+    <iframe id="exploreIFrame" className="card-img" src={`${url}&output=embed`}
       width="100%" height="100%" scrolling="no" frameborder="0"
     ></iframe>
     <div className="card-img-overlay">

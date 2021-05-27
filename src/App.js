@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Modal, Container, Row, Col, InputGroup, FormControl, Button } from 'react-bootstrap';
+import { Modal, Container, Row, Col, InputGroup, FormControl, Button, Alert } from 'react-bootstrap';
 import { AccessibilityPage } from './AccessibilityPage';
 import './App.scss';
 
@@ -9,6 +9,7 @@ function App() {
   const [url, setUrl] = useState('');
   const [accessResult, setAccessResult] = useState({});
   const [gotResult, setResult] = useState(false);
+  const [showAlert, setAlert] = useState(false);
 
   const validateUrl = () => {
     let isValid = false;
@@ -46,6 +47,12 @@ function App() {
           if (result.status === 200) {
             setAccessResult(result);
             setResult(true);
+            setAlert(false);
+          } else {
+            setAlert(true);
+            setTimeout(() => {
+              setAlert(false);
+            }, 2000);
           }
       })
         .catch(error => {
@@ -66,6 +73,14 @@ function App() {
             dialogClassName="modal-width"
             aria-labelledby="example-custom-modal-styling-title"
           >
+            {showAlert &&
+            <Alert variant="danger">
+              <Alert.Heading className="text-center">Error</Alert.Heading>
+              <p className="text-center">
+                Api returned 400 error. Something went wrong.
+                Try with different URL
+              </p>
+            </Alert>}
             <Modal.Header>
               <Modal.Title id="example-custom-modal-styling-title text-center">
                 CHECK YOUR WEBSITE ACCESSIBILITY
